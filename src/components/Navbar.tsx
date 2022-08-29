@@ -1,8 +1,11 @@
 import React from "react";
 import { ReactComponent as Cart } from "../assets/cart.svg";
 import { Link } from "react-router-dom";
+import { useShoppingCart } from "../context/ShoppingCartContext";
 
 const Navbar = () => {
+  const { openCart, cartQuantity } = useShoppingCart();
+
   return (
     <nav className="navbar sticky-top navbar-expand navbar-light bg-white shadow-sm mb-3">
       <div className="container">
@@ -17,27 +20,30 @@ const Navbar = () => {
             About
           </Link>
         </div>
-        <button
-          type="button"
-          className="btn btn-outline-primary rounded-circle"
-          style={{ width: "3rem", height: "3rem", position: "relative" }}
-        >
-          <Cart />
-          <div
-            className="rounded-circle bg-danger d-flex justify-content-center align-items-center"
-            style={{
-              width: "1.5rem",
-              height: "1.5rem",
-              position: "absolute",
-              color: "white",
-              bottom: 0,
-              right: 0,
-              transform: "translate(25%, 25%)",
-            }}
+        {cartQuantity > 0 && (
+          <button
+            type="button"
+            onClick={openCart}
+            className="btn btn-outline-primary rounded-circle"
+            style={{ width: "3rem", height: "3rem", position: "relative" }}
           >
-            3
-          </div>
-        </button>
+            <Cart />
+            <div
+              className="rounded-circle bg-danger d-flex justify-content-center align-items-center"
+              style={{
+                width: "1.5rem",
+                height: "1.5rem",
+                position: "absolute",
+                color: "white",
+                bottom: 0,
+                right: 0,
+                transform: "translate(25%, 25%)",
+              }}
+            >
+              {cartQuantity}
+            </div>
+          </button>
+        )}
       </div>
     </nav>
   );
